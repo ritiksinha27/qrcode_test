@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live QR Scanner</title>
+</head>
+<body>
+    <h1>Live QR Scanner</h1>
+    <img src="{% url 'live_camera' %}" id="camera-stream" width="600px" />
+    <script>
+        setInterval(() => {
+            fetch("{% url 'check_qr_data' %}")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.detected) {
+                        window.location.href = "{% url 'process_qr_data' %}";
+                    }
+                })
+                .catch(error => console.error('There was a problem with the fetch operation:', error));
+        }, 1000);
+    </script>
+</body>
+</html>
