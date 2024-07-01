@@ -20,5 +20,6 @@ from qr_gen import urls as qrgen_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('multi/', include('multi.urls')),
     path('',include(qrgen_urls))
 ]
